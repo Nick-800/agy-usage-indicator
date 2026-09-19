@@ -50,10 +50,17 @@ export default class AgyUsagePreferences extends ExtensionPreferences {
 
         // Formatting Group
         const formatGroup = new Adw.PreferencesGroup({
-            title: _('Format & Countdown'),
-            description: _('Configure how information is formatted in the top bar.'),
+            title: _('Format & Appearance'),
+            description: _('Configure visual layout and information in the top bar.'),
         });
         page.add(formatGroup);
+
+        const rowTopBarIcon = new Adw.SwitchRow({
+            title: _('Show Top Bar Logo'),
+            subtitle: _('Display the brand logo in the top panel.'),
+        });
+        settings.bind('show-top-bar-icon', rowTopBarIcon, 'active', Gio.SettingsBindFlags.DEFAULT);
+        formatGroup.add(rowTopBarIcon);
 
         const rowCountdown = new Adw.SwitchRow({
             title: _('Show Reset Time Countdown'),

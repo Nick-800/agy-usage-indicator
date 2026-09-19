@@ -55,6 +55,16 @@ class AgyUsageIndicator extends PanelMenu.Button {
             y_align: Clutter.ActorAlign.CENTER,
         });
 
+        const iconPath = GLib.build_filenamev([extension.path, 'icons', 'gemini.svg']);
+        this._topBarIcon = new St.Icon({
+            gicon: Gio.FileIcon.new_for_path(iconPath),
+            icon_size: 16,
+            style_class: 'system-status-icon',
+            y_align: Clutter.ActorAlign.CENTER,
+            style: 'margin-right: 5px;',
+        });
+        box.add_child(this._topBarIcon);
+
         this._statusDot = new St.Label({
             text: '● ',
             style_class: 'system-status-icon',
@@ -158,6 +168,9 @@ class AgyUsageIndicator extends PanelMenu.Button {
     }
 
     _updateUI() {
+        const showTopBarIcon = this._settings.get_boolean('show-top-bar-icon');
+        this._topBarIcon.visible = showTopBarIcon;
+
         if (!this._data) {
             this._label.set_text('AGY: ...');
             return;

@@ -6,6 +6,11 @@
       <summary>Refresh Interval</summary>
       <description>Interval in seconds between background usage refreshes.</description>
     </key>
+    <key name="show-top-bar-icon" type="b">
+      <default>true</default>
+      <summary>Show Top Bar Logo</summary>
+      <description>Display the logo in the top panel.</description>
+    </key>
     <key name="show-gemini-5h" type="b">
       <default>true</default>
       <summary>Show Gemini 5-Hour Limit</summary>
