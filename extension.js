@@ -56,8 +56,9 @@ class AgyUsageIndicator extends PanelMenu.Button {
         });
 
         const iconPath = GLib.build_filenamev([extension.path, 'icons', 'gemini.svg']);
+        const iconFile = Gio.File.new_for_path(iconPath);
         this._topBarIcon = new St.Icon({
-            gicon: Gio.FileIcon.new_for_path(iconPath),
+            gicon: new Gio.FileIcon({ file: iconFile }),
             icon_size: 16,
             style_class: 'system-status-icon',
             y_align: Clutter.ActorAlign.CENTER,
