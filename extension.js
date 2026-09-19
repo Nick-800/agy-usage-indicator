@@ -182,7 +182,28 @@ class AgyUsageIndicator extends PanelMenu.Button {
             const isClaude = groupName.toLowerCase().includes('claude') || groupName.toLowerCase().includes('gpt');
             const buckets = group.buckets || [];
 
-            menuEntries.push({ isHeader: true, text: `// ${groupName.toUpperCase()}` });
+            const iconFiles = [];
+            if (isGemini) {
+                const p = GLib.build_filenamev([this._extension.path, 'icons', 'gemini.svg']);
+                if (GLib.file_test(p, GLib.FileTest.EXISTS)) {
+                    iconFiles.push(Gio.File.new_for_path(p));
+                }
+            } else if (isClaude) {
+                const pClaude = GLib.build_filenamev([this._extension.path, 'icons', 'claude.svg']);
+                if (GLib.file_test(pClaude, GLib.FileTest.EXISTS)) {
+                    iconFiles.push(Gio.File.new_for_path(pClaude));
+                }
+                const pOpenAI = GLib.build_filenamev([this._extension.path, 'icons', 'openai.svg']);
+                if (GLib.file_test(pOpenAI, GLib.FileTest.EXISTS)) {
+                    iconFiles.push(Gio.File.new_for_path(pOpenAI));
+                }
+            }
+
+            menuEntries.push({
+                isHeader: true,
+                text: groupName.toUpperCase(),
+                iconFiles,
+            });
 
             for (const bucket of buckets) {
                 const name = bucket.name || '';
@@ -192,7 +213,7 @@ class AgyUsageIndicator extends PanelMenu.Button {
 
                 menuEntries.push({
                     isHeader: false,
-                    text: `  ${bucket.name}: ${pct}%` + (countdown ? ` (resets in ${countdown})` : ''),
+                    text: `   ${bucket.name}: ${pct}%` + (countdown ? ` (resets in ${countdown})` : ''),
                 });
 
                 let includeInTopBar = false;
@@ -239,9 +260,22 @@ class AgyUsageIndicator extends PanelMenu.Button {
                 reactive: !entry.isHeader,
                 can_focus: !entry.isHeader,
             });
+
             if (entry.isHeader) {
                 item.label.set_style('font-weight: bold; color: #00f0ff;');
+                if (entry.iconFiles && entry.iconFiles.length > 0) {
+                    for (let i = 0; i < entry.iconFiles.length; i++) {
+                        const icon = new St.Icon({
+                            gicon: new Gio.FileIcon({ file: entry.iconFiles[i] }),
+                            icon_size: 16,
+                            style: 'margin-right: 6px;',
+                            y_align: Clutter.ActorAlign.CENTER,
+                        });
+                        item.insert_child_at_index(icon, i);
+                    }
+                }
             }
+
             this._menuSection.addMenuItem(item);
         }
     }
