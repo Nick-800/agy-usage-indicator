@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="agy-usage-indicator">
+  <schema id="org.gnome.shell.extensions.agy-usage-indicator" path="/org/gnome/shell/extensions/agy-usage-indicator/">
+    <key name="refresh-interval" type="i">
+      <default>60</default>
+      <summary>Refresh Interval</summary>
+      <description>Interval in seconds between background usage refreshes.</description>
+    </key>
+    <key name="show-gemini-5h" type="b">
+      <default>true</default>
+      <summary>Show Gemini 5-Hour Limit</summary>
+      <description>Display remaining percentage for Gemini 5-hour rolling window.</description>
+    </key>
+    <key name="show-gemini-weekly" type="b">
+      <default>false</default>
+      <summary>Show Gemini Weekly Limit</summary>
+      <description>Display remaining percentage for Gemini weekly quota.</description>
+    </key>
+    <key name="show-claude-5h" type="b">
+      <default>true</default>
+      <summary>Show Claude and GPT 5-Hour Limit</summary>
+      <description>Display remaining percentage for 3P models 5-hour rolling window.</description>
+    </key>
+    <key name="show-claude-weekly" type="b">
+      <default>false</default>
+      <summary>Show Claude and GPT Weekly Limit</summary>
+      <description>Display remaining percentage for 3P models weekly quota.</description>
+    </key>
+    <key name="show-reset-countdown" type="b">
+      <default>true</default>
+      <summary>Show Reset Countdown</summary>
+      <description>Display remaining time until quota reset.</description>
+    </key>
+    <key name="compact-labels" type="b">
+      <default>true</default>
+      <summary>Compact Labels</summary>
+      <description>Use abbreviated labels like GEM and 3P in the top bar.</description>
+    </key>
+  </schema>
+</schemalist>

@@ -1,0 +1,13 @@
+{
+  "uuid": "agy-usage-indicator@nick-800.github.io",
+  "name": "AGY Usage Indicator",
+  "description": "Live top bar indicator for Google Antigravity (agy) model quotas and reset countdowns. Displays real-time percentages and reset countdowns for Gemini, Claude, and GPT models.",
+  "shell-version": [
+    "45",
+    "46",
+    "47"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.agy-usage-indicator",
+  "url": "https://github.com/Nick-800/agy-usage-indicator",
+  "version": 1
+}
