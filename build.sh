@@ -2,6 +2,7 @@
 set -e
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+rm -f "$DIR"/*.shell-extension.zip
 glib-compile-schemas "$DIR/schemas"
 gnome-extensions pack --force --extra-source=prefs.js --extra-source=icons --out-dir="$DIR" "$DIR"
 echo "Bundle generated: $(ls -1 "$DIR"/*.shell-extension.zip)"
