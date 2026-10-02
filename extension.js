@@ -14,6 +14,7 @@ function formatCountdown(isoString) {
     try {
         const cleanStr = isoString.replace('Z', '+00:00');
         const target = new Date(cleanStr).getTime();
+        if (Number.isNaN(target)) return '';
         const now = Date.now();
         const diffSec = Math.floor((target - now) / 1000);
         if (diffSec <= 0) return 'ready';
@@ -32,9 +33,17 @@ function getAgyExecutable() {
     const inPath = GLib.find_program_in_path('agy');
     if (inPath) return inPath;
     const home = GLib.get_home_dir();
-    const fallback = GLib.build_filenamev([home, '.local', 'bin', 'agy']);
-    if (GLib.file_test(fallback, GLib.FileTest.IS_EXECUTABLE)) {
-        return fallback;
+    const candidatePaths = [
+        GLib.build_filenamev([home, '.local', 'bin', 'agy']),
+        GLib.build_filenamev([home, '.cargo', 'bin', 'agy']),
+        '/usr/local/bin/agy',
+        '/usr/bin/agy',
+        '/snap/bin/agy',
+    ];
+    for (const candidate of candidatePaths) {
+        if (GLib.file_test(candidate, GLib.FileTest.IS_EXECUTABLE)) {
+            return candidate;
+        }
     }
     return 'agy';
 }
@@ -143,7 +152,7 @@ class AgyUsageIndicator extends PanelMenu.Button {
                 try {
                     const [, stdout, stderr] = source.communicate_utf8_finish(res);
                     if (source.get_successful()) {
-                        const parsed = JSON.parse(stdout);
+                        const parsed = JSON.parse(stdout?.trim() || '{}');
                         this._data = parsed;
                         this._statusDot.set_style('color: #00ffaa;');
                         this._updateUI();
@@ -155,10 +164,11 @@ class AgyUsageIndicator extends PanelMenu.Button {
                         }
                     }
                 } catch (e) {
-                    if (!e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED)) {
-                        console.error(`[AGY] Failed to parse usage response: ${e}`);
-                        this._statusDot.set_style('color: #ff3366;');
+                    if (e.matches?.(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED)) {
+                        return;
                     }
+                    console.error(`[AGY] Failed to parse usage response: ${e}`);
+                    this._statusDot.set_style('color: #ff3366;');
                 }
             });
         } catch (e) {

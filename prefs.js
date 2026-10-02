@@ -35,14 +35,14 @@ export default class AgyUsagePreferences extends ExtensionPreferences {
         displayGroup.add(rowGeminiWeekly);
 
         const rowClaude5h = new Adw.SwitchRow({
-            title: _('Claude & GPT (5-Hour Rolling Limit)'),
+            title: _('Claude &amp; GPT (5-Hour Rolling Limit)'),
             subtitle: _('Show remaining percentage for 3P models 5h limit.'),
         });
         settings.bind('show-claude-5h', rowClaude5h, 'active', Gio.SettingsBindFlags.DEFAULT);
         displayGroup.add(rowClaude5h);
 
         const rowClaudeWeekly = new Adw.SwitchRow({
-            title: _('Claude & GPT (Weekly Limit)'),
+            title: _('Claude &amp; GPT (Weekly Limit)'),
             subtitle: _('Show remaining percentage for 3P models weekly limit.'),
         });
         settings.bind('show-claude-weekly', rowClaudeWeekly, 'active', Gio.SettingsBindFlags.DEFAULT);
@@ -50,7 +50,7 @@ export default class AgyUsagePreferences extends ExtensionPreferences {
 
         // Formatting Group
         const formatGroup = new Adw.PreferencesGroup({
-            title: _('Format & Appearance'),
+            title: _('Format &amp; Appearance'),
             description: _('Configure visual layout and information in the top bar.'),
         });
         page.add(formatGroup);

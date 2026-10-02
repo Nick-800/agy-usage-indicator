@@ -15,7 +15,7 @@ A sleek, lightweight GNOME Shell extension that displays real-time **Google Anti
 
 ## Prerequisites
 
-- **GNOME Shell**: 45, 46, or 47
+- **GNOME Shell**: 45, 46, 47, 48, 49, or 50
 - **Antigravity CLI**: `agy` command installed and available in `$PATH` (or at `~/.local/bin/agy`).
 
 ---
